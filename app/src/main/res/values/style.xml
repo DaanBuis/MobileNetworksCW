@@ -10,4 +10,10 @@
 
     </style>
 
+    <style name="homeButton">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

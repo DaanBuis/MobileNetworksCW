@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Review App</string>
+    <string name="welcomeText"><u><b>Tourist Review App</b></u></string>
+    <string name="reviewText"><u><b>Review Page</b></u></string>
+    <string name="searchText"><u><b>Search Page</b></u></string>
+    <string name="createRText"><u><b>Create Review Page</b></u></string>
+    <string name="profileText"><u><b>Profile Page</b></u></string>
 </resources>
