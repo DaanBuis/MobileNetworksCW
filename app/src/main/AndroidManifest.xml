@@ -16,6 +16,9 @@
             android:name=".ReviewPage"
             android:exported="false" />
         <activity
+            android:name=".PostReviewPage"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -25,5 +28,5 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 </manifest>

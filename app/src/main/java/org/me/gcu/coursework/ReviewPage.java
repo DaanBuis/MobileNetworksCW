@@ -1,32 +1,68 @@
 package org.me.gcu.coursework;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
-import org.me.gcu.coursework.R;
+
+import java.io.File;
 
 public class ReviewPage extends AppCompatActivity {
+
+    TextView nameText;
+    TextView locationText;
+    ImageView photo;
+    RatingBar ratings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_review_page);
+
+        Intent intent = getIntent();
+
+        String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+
+
+
+
+        nameText = (TextView)findViewById(R.id.rpName);
+        locationText = (TextView)findViewById(R.id.rpLocation);
+        photo = (ImageView)findViewById(R.id.rpPhoto);
+        ratings = (RatingBar)findViewById(R.id.rpratingBar);
+
+
+
+
+        if (text != null) {
+            String[] strSplit = text.split(",");
+            nameText.setText(strSplit[0]);
+            locationText.setText(strSplit[1]);
+            ratings.setRating(Float.parseFloat(strSplit[2]));
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "saved_image.jpg");
+            if (file.exists()) {
+                Uri imageUri = Uri.fromFile(file);
+                photo.setImageURI(imageUri);  // Display the saved image in an ImageView
+            }
+        }
+
+
+
+
+
 
         ActionBar actionBar = getSupportActionBar();
 

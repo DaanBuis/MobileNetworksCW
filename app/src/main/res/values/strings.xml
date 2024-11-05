@@ -5,4 +5,9 @@
     <string name="searchText"><u><b>Search Page</b></u></string>
     <string name="createRText"><u><b>Create Review Page</b></u></string>
     <string name="profileText"><u><b>Profile Page</b></u></string>
+    <string name="prpText"><u><b>Add your Rating</b></u></string>
+    <string name="prpHeading"><u><b>Post a Review</b></u></string>
+    <string name="rpHeading"><u><b>Review</b></u></string>
+    <string name="rpNameText"><u><b></b></u></string>
+    <string name="rpLocationText"><u><b></b></u></string>
 </resources>

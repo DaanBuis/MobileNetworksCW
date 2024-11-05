@@ -7,4 +7,70 @@
     android:layout_height="match_parent"
     tools:context=".ReviewPage">
 
+    <TextView
+        android:id="@+id/rpHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="22dp"
+        android:text="@string/rpHeading"
+        android:textColor="@color/black"
+        android:textSize="@dimen/rpHeading"
+        app:layout_constraintBottom_toTopOf="@+id/rpPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/rpPhoto"
+        android:layout_width="345dp"
+        android:layout_height="270dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/rpratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/alt_image" />
+
+    <RatingBar
+        android:id="@+id/rpratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/rpName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/rpName"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/rpNameText"
+        android:background="@drawable/text_bg"
+        android:hint="Name"
+        android:padding="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/rpLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/rpLocation"
+        android:layout_width="250dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="304dp"
+        android:background="@drawable/text_bg"
+        android:hint="Location"
+        android:padding="6dp"
+        android:text="@string/rpLocationText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

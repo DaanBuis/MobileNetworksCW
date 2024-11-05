@@ -2,4 +2,7 @@
 <resources>
     <dimen name="mainTextsz">30sp</dimen>
     <dimen name="homeButtonsz">20sp</dimen>
+    <dimen name="prpRating">20sp</dimen>
+    <dimen name="prpHeading">30sp</dimen>
+    <dimen name="rpHeading">30sp</dimen>
 </resources>
