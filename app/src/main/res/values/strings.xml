@@ -10,4 +10,7 @@
     <string name="rpHeading"><u><b>Review</b></u></string>
     <string name="rpNameText"><u><b></b></u></string>
     <string name="rpLocationText"><u><b></b></u></string>
+    <string name="profilePage"><u><b>Profile</b></u></string>
+    <string name="profileButton"><b>Update</b></string>
+    <string name="picButton"><b>Change</b></string>
 </resources>

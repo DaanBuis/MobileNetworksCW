@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button navReview;
     private Button postReview;
+    private Button profilePage;
     private String tempUploadData;
     private TextView text;
     private String[] uploadData;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         navReview = (Button)findViewById(R.id.reviewBH);
         postReview = (Button)findViewById(R.id.createRBH);
+        profilePage = (Button)findViewById(R.id.profileBH);
 
 
         navReview.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,PostReviewPage.class);
 
                 startActivityForResult(intent, POST_REVIEW_REQUEST_CODE );
+            }
+        });
+
+        profilePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ProfilePage.class);
+
+                startActivity(intent);
             }
         });
         // calling this activity's function to
