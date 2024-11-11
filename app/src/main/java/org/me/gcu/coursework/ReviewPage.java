@@ -87,7 +87,8 @@ public class ReviewPage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( @NonNull MenuItem item ) {
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ReviewPage.this,SettingsActivity.class);
+            startActivity(intent);
         } else if (item.getItemId() == R.id.backpage) {
             finish();
         }

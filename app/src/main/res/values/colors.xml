@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FA9B43</color>
     <color name="offorange">#F1A561</color>
+    <color name="darkorange">#EF4C00</color>
+    <color name="deeporange">#F35528</color>
 </resources>

@@ -7,4 +7,5 @@
     <dimen name="rpHeading">30sp</dimen>
     <dimen name="pHeading">30sp</dimen>
     <dimen name="ranButton">8sp</dimen>
+    <dimen name="settingHeading">30sp</dimen>
 </resources>

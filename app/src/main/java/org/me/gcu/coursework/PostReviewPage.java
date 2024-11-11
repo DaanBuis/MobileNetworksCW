@@ -1,9 +1,14 @@
 package org.me.gcu.coursework;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -11,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,6 +44,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Locale;
+import android.location.LocationManager;
+import android.provider.Settings;
 
 public class PostReviewPage extends AppCompatActivity {
 
@@ -51,7 +61,11 @@ public class PostReviewPage extends AppCompatActivity {
     RatingBar rating;
     private Uri tempUri;
     private String textBox;
-
+    Button getLocation;
+    private TrackGPS gps;
+    private static final int REQUEST_CODE_PERMISSION = 1;
+    private static final int GPS_REQUEST_CODE = 60;
+    String[] mPermission = {Manifest.permission.ACCESS_FINE_LOCATION};
 
 
     @Override
@@ -66,6 +80,34 @@ public class PostReviewPage extends AppCompatActivity {
         uploadPhoto = (Button)findViewById(R.id.prpSubmitPhoto);
         submitButton = (Button)findViewById(R.id.prpSubmitReview);
         rating = (RatingBar)findViewById(R.id.prpRating);
+        getLocation = (Button)findViewById(R.id.getLocBut);
+
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= 23) {
+
+                    if (checkSelfPermission(mPermission[0]) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PostReviewPage.this, mPermission, REQUEST_CODE_PERMISSION);
+                        return;
+                    }
+                }
+
+                gps = new TrackGPS(PostReviewPage.this);
+
+                if (isGPSEnabled()) {
+                    if (gps.canGetLocation()) {
+                        getAddressFromLocation(gps.getLatitude(), gps.getLongitude());
+
+                    } else {
+                        gps.showAlert();
+                    }
+                } else {
+                    // Show an alert to prompt the user to enable GPS
+                    promptForGPS();
+                }
+            }
+        });
 
 
 
@@ -102,6 +144,43 @@ public class PostReviewPage extends AppCompatActivity {
 
 
     }
+
+    private boolean isGPSEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    private void promptForGPS() {
+        new android.app.AlertDialog.Builder(this)
+                .setMessage("GPS is not enabled. Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    // Redirect the user to the location settings
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, GPS_REQUEST_CODE);  // Use the GPS request code
+                })
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel())
+                .show();
+    }
+
+
+
+    private void getAddressFromLocation(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                String addressText = address.getAddressLine(0); // Full address line
+                locationText.setText(addressText); // Set the address in the EditText
+            } else {
+                Toast.makeText(PostReviewPage.this, "No address found for current location", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(PostReviewPage.this, "Geocoder service failed", Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
 
@@ -111,7 +190,8 @@ public class PostReviewPage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( @NonNull MenuItem item ) {
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PostReviewPage.this,SettingsActivity.class);
+            startActivity(intent);
         } else if (item.getItemId() == R.id.backpage) {
             finish();
         }
@@ -133,24 +213,33 @@ public class PostReviewPage extends AppCompatActivity {
 
     // this function is triggered when user
     // selects the image from the imageChooser
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
-
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
-            if (requestCode == SELECT_PICTURE) {
-                // Get the url of the image from data
-                Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
-                    // update the preview image in the layout
-                    photo.setImageURI(selectedImageUri);
-                    saveImageToExternalStorage(selectedImageUri);
+        // Handle GPS settings result
+        if (requestCode == GPS_REQUEST_CODE) {
+            if (isGPSEnabled()) {
+                if (gps.canGetLocation()) {
+                    getAddressFromLocation(gps.getLatitude(), gps.getLongitude());
                 }
+            } else {
+                Toast.makeText(this, "GPS is still disabled. Unable to get location.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        // Handle image selection result
+        if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            if (null != selectedImageUri) {
+                // Update the preview image in the layout
+                photo.setImageURI(selectedImageUri);
+                saveImageToExternalStorage(selectedImageUri);
             }
         }
     }
+
+
 
     private void saveImageToExternalStorage(Uri imageUri) {
         try {

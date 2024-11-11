@@ -2,8 +2,10 @@ package org.me.gcu.coursework;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,8 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     private static final int POST_REVIEW_REQUEST_CODE = 0;
+    private static final String PREFS_NAME = "AppSettings";
+    private static final String THEME_KEY = "theme";
 
     private Button navReview;
     private Button postReview;
@@ -29,8 +33,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        boolean isDarkTheme = prefs.getBoolean(THEME_KEY, false); // Default to light theme
 
+        // Set the appropriate night mode based on the stored preference
+        if (isDarkTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        setContentView(R.layout.activity_main);
         navReview = (Button)findViewById(R.id.reviewBH);
         postReview = (Button)findViewById(R.id.createRBH);
         profilePage = (Button)findViewById(R.id.profileBH);
@@ -87,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
                 tempUploadData = data.getStringExtra(Intent.EXTRA_TEXT);
 
-                text = (TextView)findViewById(R.id.textView);
-                text.setText(tempUploadData);
             }
         }
     }
@@ -107,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( @NonNull MenuItem item ) {
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+            startActivity(intent);
         } else if (item.getItemId() == R.id.backpage) {
                 Toast.makeText(this, "Backpage Clicked", Toast.LENGTH_SHORT).show();
         }

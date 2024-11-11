@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Location Settings">
+
+        <!-- Switch for enabling/disabling location access -->
+        <SwitchPreferenceCompat
+            android:key="location_permission"
+            android:title="Enable Location"
+            android:summary="Allow the app to access your location"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_location"
+            android:enabled="true"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -91,6 +91,8 @@ public class ProfilePage extends AppCompatActivity {
 
                 writeToFile("file.txt", content);
 
+                Toast.makeText(ProfilePage.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -127,7 +129,8 @@ public class ProfilePage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( @NonNull MenuItem item ) {
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ProfilePage.this,SettingsActivity.class);
+            startActivity(intent);
         } else if (item.getItemId() == R.id.backpage) {
             finish();
         }

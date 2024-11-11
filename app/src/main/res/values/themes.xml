@@ -1,9 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Coursework" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<resources>
+    <!-- Base application theme for dark mode -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/orange</item> <!-- Darker color for dark theme -->
+        <item name="colorPrimaryVariant">@color/offorange</item> <!-- Darker accent for dark theme -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Ensure text/icons are visible on the dark action bar -->
+        <item name="colorAccent">@color/offorange</item>
     </style>
-
-    <style name="Theme.Coursework" parent="Base.Theme.Coursework" />
 </resources>
