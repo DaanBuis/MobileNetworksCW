@@ -2,6 +2,8 @@ package org.me.gcu.coursework;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -121,15 +123,34 @@ public class PostReviewPage extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // get the text from the EditText
+                // Create a confirmation dialog
+                new AlertDialog.Builder(PostReviewPage.this)
+                        .setTitle("Confirm Submission")  // Title of the dialog
+                        .setMessage("Are you sure you want to submit the data?")  // The message to show
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // This block is executed if the user clicks "Yes"
 
-                textBox = nameText.getText().toString() + "," + locationText.getText().toString() + "," + String.valueOf(rating.getRating());
+                                // Get the text from the EditText
+                                textBox = nameText.getText().toString() + "#" + locationText.getText().toString() + "#" + String.valueOf(rating.getRating());
 
-                // put the String to pass back into an Intent and close this activity
-                Intent intent = new Intent();
-                intent.putExtra(Intent.EXTRA_TEXT, textBox);
-                setResult(RESULT_OK, intent);
-                finish();
+                                // Put the String to pass back into an Intent and close this activity
+                                Intent intent = new Intent();
+                                intent.putExtra(Intent.EXTRA_TEXT, textBox);
+                                setResult(RESULT_OK, intent);
+                                Toast.makeText(PostReviewPage.this,"Review Submitted", Toast.LENGTH_LONG).show();
+                                finish();  // Close the activity
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // This block is executed if the user clicks "No"
+                                dialog.dismiss();  // Dismiss the dialog and do nothing
+                            }
+                        })
+                        .show();  // Show the dialog
             }
         });
 
@@ -253,7 +274,7 @@ public class PostReviewPage extends AppCompatActivity {
             }
 
             // Define the output file
-            File outputFile = new File(externalDirectory, "saved_image.jpg");
+            File outputFile = new File(externalDirectory, "review_image.jpg");
 
             // Create OutputStream to write the image
             FileOutputStream outputStream = new FileOutputStream(outputFile);

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/location_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/alt_image"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/locName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Restaurant Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/locAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="4dp"/>
+
+        <RatingBar
+            android:id="@+id/locRating"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:layout_marginTop="8dp"
+            android:text="Rating"
+            android:clickable="false"
+            android:focusable="false"
+            android:isIndicator="true"
+
+            />
+    </LinearLayout>
+</LinearLayout>

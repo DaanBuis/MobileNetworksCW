@@ -1,5 +1,7 @@
 package org.me.gcu.coursework;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
@@ -81,20 +83,42 @@ public class ProfilePage extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Show a confirmation dialog before updating the profile
+                new AlertDialog.Builder(ProfilePage.this)
+                        .setTitle("Confirm Profile Update")  // Title of the dialog
+                        .setMessage("Are you sure you want to update your profile?")  // Confirmation message
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // This block is executed if the user clicks "Yes"
 
-                name = nameText.getText().toString()  ;
-                email = emailText.getText().toString();
-                phone = phoneText.getText().toString();
-                address = addressText.getText().toString();
+                                // Get the updated text from the EditTexts
+                                name = nameText.getText().toString();
+                                email = emailText.getText().toString();
+                                phone = phoneText.getText().toString();
+                                address = addressText.getText().toString();
 
-                String content = name + "\n" + email + "\n" + phone + "\n" + address + "\n";
+                                // Create a string with all the profile information
+                                String content = name + "\n" + email + "\n" + phone + "\n" + address + "\n";
 
-                writeToFile("file.txt", content);
+                                // Write the updated profile content to the file
+                                writeToFile("file.txt", content);
 
-                Toast.makeText(ProfilePage.this, "Profile Updated", Toast.LENGTH_SHORT).show();
-
+                                // Show a toast to indicate the profile has been updated
+                                Toast.makeText(ProfilePage.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // This block is executed if the user clicks "No"
+                                dialog.dismiss();  // Dismiss the dialog and do nothing
+                            }
+                        })
+                        .show();  // Show the dialog
             }
         });
+
 
         randomiser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +173,7 @@ public class ProfilePage extends AppCompatActivity {
             phoneText.setText(lines[2]);
             addressText.setText(lines[3]);
 
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "saved_image.jpg");
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "profile_pic.jpg");
             if (file.exists()) {
                 Uri imageUri = Uri.fromFile(file);
                 profilePic.setImageURI(imageUri);  // Display the saved image in an ImageView
@@ -234,7 +258,7 @@ public class ProfilePage extends AppCompatActivity {
             }
 
             // Define the output file
-            File outputFile = new File(externalDirectory, "saved_image.jpg");
+            File outputFile = new File(externalDirectory, "profile_pic.jpg");
 
             // Create OutputStream to write the image
             FileOutputStream outputStream = new FileOutputStream(outputFile);

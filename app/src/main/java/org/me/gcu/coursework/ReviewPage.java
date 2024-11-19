@@ -48,11 +48,11 @@ public class ReviewPage extends AppCompatActivity {
 
 
         if (text != null) {
-            String[] strSplit = text.split(",");
+            String[] strSplit = text.split("#");
             nameText.setText(strSplit[0]);
             locationText.setText(strSplit[1]);
             ratings.setRating(Float.parseFloat(strSplit[2]));
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "saved_image.jpg");
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "review_image.jpg");
             if (file.exists()) {
                 Uri imageUri = Uri.fromFile(file);
                 photo.setImageURI(imageUri);  // Display the saved image in an ImageView

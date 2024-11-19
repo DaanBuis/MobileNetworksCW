@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button navReview;
     private Button postReview;
     private Button profilePage;
+    private Button searchPage;
     private String tempUploadData;
     private TextView text;
     private String[] uploadData;
@@ -48,12 +49,22 @@ public class MainActivity extends AppCompatActivity {
         navReview = (Button)findViewById(R.id.reviewBH);
         postReview = (Button)findViewById(R.id.createRBH);
         profilePage = (Button)findViewById(R.id.profileBH);
+        searchPage = (Button)findViewById(R.id.searchBH);
 
 
         navReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,ReviewPage.class);
+                intent.putExtra(Intent.EXTRA_TEXT, tempUploadData);
+                startActivity(intent);
+            }
+        });
+
+        searchPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,SearchPage.class);
                 intent.putExtra(Intent.EXTRA_TEXT, tempUploadData);
                 startActivity(intent);
             }
